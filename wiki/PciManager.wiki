@@ -2,7 +2,8 @@
 
 = Introduction =
 
-With PciManager Arduino library you can manage the Pin Change Interrupt of the microcontroller. You can register handlers in the PciManager for a change of a pin. The manager handles the interrupt and call the callback functions. 
+With PciManager Arduino library you can manage the Pin Change Interrupt of the microcontroller.
+You can register handlers in the PciManager for a change of a pin. The manager handles the interrupt and call the callback functions. 
 
 
 = Example code =
