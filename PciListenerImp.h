@@ -31,7 +31,7 @@
 #include <PciListener.h>
 
 #define CHANGEKIND_HIGH_TO_LOW LOW
-#define CHANGEKIND_LOW_TO_HIGH LOW
+#define CHANGEKIND_LOW_TO_HIGH HIGH
 
 /**
  * A basic PinChangeInterrupt listener implementation.
@@ -42,10 +42,11 @@ class PciListenerImp : public PciListener
     /**
      * For the constructor add a function callback, that will be called either with CHANGEKIND_HIGH_TO_LOW or CHANGEKIND_LOW_TO_HIGH.
      */
-    PciListenerImp(byte pin, void (*callback)(byte changeKind));
+    PciListenerImp(byte pin, void (*callback)(byte changeKind), bool pullUp = false);
     virtual void pciHandleInterrupt(byte vector);
   private:
     void (*_callback)(byte changeKind);
+	byte _lastVal;
 };
 
 #endif

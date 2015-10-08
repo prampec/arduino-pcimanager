@@ -26,16 +26,24 @@
 
 #include "Arduino.h"
 #include "PciListenerImp.h"
-#include <Task.h>
 
-PciListenerImp::PciListenerImp(byte pin, void (*callback)(byte changeKind)) {
+PciListenerImp::PciListenerImp(byte pin, void (*callback)(byte changeKind), bool pullUp) {
+  this->pciPin = pin;
   this->_callback = callback;
+  this->_lastVal = digitalRead(this->pciPin);
   
-  pinMode(pin, INPUT);
+  if(pullUp) {
+    pinMode(pin, INPUT_PULLUP);
+  } else {
+    pinMode(pin, INPUT);
+  }
 }
 
 void PciListenerImp::pciHandleInterrupt(byte vect) {
-  volatile int val = digitalRead(this->pciPin);
-  this->_callback(val);
+  byte val = digitalRead(this->pciPin);
+  if(val != this->_lastVal) {
+    this->_lastVal = val;
+    this->_callback(val);
+  }
 }
 
