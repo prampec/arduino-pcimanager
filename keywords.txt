@@ -12,3 +12,7 @@ PciListener	KEYWORD1
 pciHandleInterrupt	KEYWORD2
 
 PciListenerImp	KEYWORD1
+
+PciListenerImp2	KEYWORD1
+init	KEYWORD2
+lastVal KEYWORD2
