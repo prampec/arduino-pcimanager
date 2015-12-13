@@ -9,7 +9,7 @@ PciListenerImp listener(INPUT_PIN, onPinChange);
 
 void setup() {
   Serial.begin(9800);
-  PciManager.registerListener(INPUT_PIN, &listener);
+  PciManager.registerListener(&listener);
   Serial.println("Ready.");
 }
 
