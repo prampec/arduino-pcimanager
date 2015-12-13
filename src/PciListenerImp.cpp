@@ -30,13 +30,13 @@
 PciListenerImp::PciListenerImp(byte pin, void (*callback)(byte changeKind), bool pullUp) {
   this->pciPin = pin;
   this->_callback = callback;
-  this->_lastVal = digitalRead(this->pciPin);
   
   if(pullUp) {
     pinMode(pin, INPUT_PULLUP);
   } else {
     pinMode(pin, INPUT);
   }
+  this->_lastVal = digitalRead(this->pciPin);
 }
 
 void PciListenerImp::pciHandleInterrupt(byte vect) {

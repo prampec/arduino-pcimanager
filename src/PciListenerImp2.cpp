@@ -34,13 +34,13 @@ PciListenerImp2::PciListenerImp2() {
 void PciListenerImp2::init(byte pin, IPciChangeHandler* handler, bool pullUp) {
   this->pciPin = pin;
   this->_pciChangeHandler = handler;
-  this->lastVal = digitalRead(this->pciPin);
   
   if(pullUp) {
     pinMode(pin, INPUT_PULLUP);
   } else {
     pinMode(pin, INPUT);
   }
+  this->lastVal = digitalRead(this->pciPin);
 }
 
 void PciListenerImp2::pciHandleInterrupt(byte vect) {
