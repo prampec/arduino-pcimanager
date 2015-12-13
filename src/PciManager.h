@@ -37,15 +37,17 @@
 class PciManagerClass
 {
   public:
-   /**
-    * Register a pin for pin change interrupt.
-    *  pin - The pin the listener to be registered for pinChange.
-    *  listener - The lister that is called on pin change.
-    */
-   void registerListener(byte pin, PciListener* listener);
+    /**
+     * Register a pin for pin change interrupt.
+     *  pin - The pin the listener to be registered for pinChange.
+     *  listener - The lister that is called on pin change. Note, that as matters stand, you souldn't register
+     *    a listener multiply times (e.g. for more pins).
+     */
+    void registerListener(byte pin, PciListener* listener);
     /**
      * Register a pin for pin change interrupt. Same as above but the pin needs to be configured in the listener.
-     *  listener - The lister that is called on pin change.
+     *  listener - The lister that is called on pin change. Note, that as matters stand, you souldn't register
+     *    a listener multiply times (e.g. for more pins).
      */
     void registerListener(PciListener* listener);
     /**
