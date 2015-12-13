@@ -93,6 +93,10 @@ void PciManagerClass::registerListener(byte pin, PciListener* listener) {
   this->add(listener);
 }
 
+void PciManagerClass::registerListener(PciListener* listener) {
+  this.registerListener(listener->pciPin, listener);
+}
+
 void PciManagerClass::removeListener(PciListener* listenerToRemove) {
   this->remove(listenerToRemove);
   boolean hasMoreListenersOnSamePin = false;
