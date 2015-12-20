@@ -94,7 +94,7 @@ void PciManagerClass::registerListener(byte pin, PciListener* listener) {
 }
 
 void PciManagerClass::registerListener(PciListener* listener) {
-  this.registerListener(listener->pciPin, listener);
+  this->registerListener(listener->pciPin, listener);
 }
 
 void PciManagerClass::removeListener(PciListener* listenerToRemove) {
