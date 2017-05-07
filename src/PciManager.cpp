@@ -5,7 +5,7 @@
  *
  * Author: Balazs Kelemen
  * Contact: prampec+arduino@gmail.com
- * Copyright: 2012 Balazs Kelemen
+ * Copyright: 2017 Balazs Kelemen
  * Copying permission statement:
     This file is part of PciManager.
 
@@ -26,7 +26,8 @@
 
 #include "Arduino.h"
 #include "PciManager.h"
-
+//#include <avr/io.h>
+//#include <avr/interrupt.h>
 
 /**
  * Add listener to the chain.
@@ -82,6 +83,7 @@ void PciManagerClass::remove(PciListener* listener) {
 void PciManagerClass::registerListener(byte pin, PciListener* listener) {
   // -- PCINT vector will be 0, 1 or 2 depending on the pin.
   // --  digitalPinToPCICRbit(pin) will calculate which one it is.
+#if defined(digitalPinToPCICRbit)
   listener->pciVector = digitalPinToPCICRbit(pin);
   listener->pciPin = pin;
 
@@ -89,7 +91,8 @@ void PciManagerClass::registerListener(byte pin, PciListener* listener) {
   *pcicr |= (1 << listener->pciVector);
   volatile uint8_t* pcmsk = digitalPinToPCMSK(pin);
   *pcmsk |= (1 << digitalPinToPCMSKbit(pin));
-  
+#endif
+
   this->add(listener);
 }
 
@@ -117,6 +120,7 @@ void PciManagerClass::removeListener(PciListener* listenerToRemove) {
   
   if(!hasMoreListenersOnSamePin) {
     // -- Remove mask if no other uses this pin.
+#if defined(digitalPinToPCICRbit)
     volatile uint8_t* pcmsk = digitalPinToPCMSK(listenerToRemove->pciPin);
     *pcmsk &= ~(1 << digitalPinToPCMSKbit(listenerToRemove->pciPin));
 
@@ -125,6 +129,7 @@ void PciManagerClass::removeListener(PciListener* listenerToRemove) {
       volatile uint8_t* pcicr = digitalPinToPCICR(listenerToRemove->pciPin);
       *pcicr &= ~(1 << listenerToRemove->pciVector);
     }
+#endif
   }
 }
 
@@ -145,16 +150,21 @@ void PciManagerClass::callListeners(byte pciVectorId) {
 /**
  * Global interrupt handling implementations.
  */
+#if defined(PCINT0_vect)
 ISR(PCINT0_vect){
   PciManager.callListeners(0);
 }
+#endif
+#if defined(PCINT1_vect)
 ISR(PCINT1_vect){
   PciManager.callListeners(1);
 }
+#endif
+#if defined(PCINT2_vect)
 ISR(PCINT2_vect){
   PciManager.callListeners(2);
 }
-
+#endif
 
 /**
  * Create a singleton from this manager class.
