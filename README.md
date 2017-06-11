@@ -5,6 +5,8 @@ You can register listeners in the PciManager for a change of a pin. The manager 
 
 PciManager does not read the value of the pin, it just hides dirty hardware flags, but flexible enough to use multiply listeners on multiply pins.
 
+__NOTE__: On some hardware the pin change interrupt is not implemented by interrupt vectors. As PciManager operates with interrupt vectors, it will just not do the job on hardware like this.
+
 
 # Example code #
 
