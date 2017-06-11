@@ -4,6 +4,7 @@
 
 #define INPUT_PIN 3
 
+void onPinChange(byte changeKind);
 PciListenerImp listener(INPUT_PIN, onPinChange);
 
 
@@ -14,6 +15,7 @@ void setup() {
 }
 
 void onPinChange(byte changeKind) {
+  // -- changeKind can be: CHANGEKIND_HIGH_TO_LOW, or CHANGEKIND_LOW_TO_HIGH HIGH
   Serial.print("pci : ");
   Serial.println(changeKind);
 }
