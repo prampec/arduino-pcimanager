@@ -15,4 +15,4 @@ PciListenerImp	KEYWORD1
 
 PciListenerImp2	KEYWORD1
 init	KEYWORD2
-lastVal KEYWORD2
+lastVal	KEYWORD2
